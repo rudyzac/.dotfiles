@@ -17,6 +17,10 @@ ln -sf ~/.dotfiles/zsh/zshrc.main ~/.zshrc
 
 # Powerlevel10k config
 ln -sf ~/.dotfiles/zsh/.p10k.zsh ~/.p10k.zsh
+
+# NVim config
+ln -sf ~/.dotfiles/nvim/init.lua ~/.config/nvim/init.lua
+
 ```
 
 3. **Restart your terminal or reload Zsh:**
