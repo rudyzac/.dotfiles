@@ -77,6 +77,10 @@ require("lazy").setup({
           follow_current_file = {
             enabled = true,
           },
+          filtered_items = {
+            hide_dotfiles = false,  -- show hidden files
+            hide_gitignored = false,
+          },
           hijack_netrw_behavior = "open_default",
         },
         window = {
