@@ -54,9 +54,6 @@ require("lazy").setup({
   -- EasyMotion plugin
   "easymotion/vim-easymotion",
 
-  -- Treesitter for syntax highlighting
-  "nvim-treesitter/nvim-treesitter",
-
   -- Lualine for status line
   "nvim-lualine/lualine.nvim",
 
