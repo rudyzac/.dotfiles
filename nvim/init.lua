@@ -51,6 +51,9 @@ vim.opt.rtp:prepend(lazypath)
 -- Plugin setup with Lazy.nvim
 -- ==============================
 require("lazy").setup({
+  -- Syntax support for many languages
+  "sheerun/vim-polyglot",
+
   -- EasyMotion plugin
   "easymotion/vim-easymotion",
 
