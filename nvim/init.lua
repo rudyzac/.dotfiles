@@ -32,6 +32,14 @@ vim.keymap.set("n", "<leader>e", ":Neotree toggle<CR>", { silent = true }) -- Op
 vim.keymap.set("n", "<leader>o", ":Neotree focus<CR>", { silent = true })  -- Jump to explorer window
 
 -- ==============================
+-- Telescope key mappings
+-- ==============================
+vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<CR>", { silent = true }) -- Find files
+vim.keymap.set("n", "<leader>fg", "<cmd>Telescope live_grep<CR>", { silent = true })  -- Live grep
+vim.keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { silent = true })    -- List buffers
+vim.keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { silent = true })  -- Help tags
+
+-- ==============================
 -- Bootstrap Lazy.nvim if not installed
 -- ==============================
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -78,7 +86,7 @@ require("lazy").setup({
             enabled = true,
           },
           filtered_items = {
-            hide_dotfiles = false,  -- show hidden files
+            hide_dotfiles = false, -- show hidden files
             hide_gitignored = false,
           },
           hijack_netrw_behavior = "open_default",
@@ -89,5 +97,29 @@ require("lazy").setup({
       })
     end,
   },
-})
 
+  -- ==============================
+  -- Telescope (fuzzy finder)
+  -- ==============================
+  {
+    "nvim-telescope/telescope.nvim", version = '*',
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+    },
+    config = function()
+      local telescope = require("telescope")
+      telescope.setup({
+        defaults = {
+          mappings = {
+            i = {
+              ["<C-k>"] = require("telescope.actions").move_selection_previous,
+              ["<C-j>"] = require("telescope.actions").move_selection_next,
+            },
+          },
+        },
+      })
+      telescope.load_extension("fzf")
+    end,
+  },
+})
