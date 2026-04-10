@@ -122,4 +122,36 @@ require("lazy").setup({
       telescope.load_extension("fzf")
     end,
   },
+
+  -- ==============================
+  -- LSP Configuration (nvim-lspconfig)
+  -- ==============================
+  {
+    "neovim/nvim-lspconfig",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    config = function()
+      require("config.lsp")
+    end,
+  },
+
+  -- ==============================
+  -- Completion (nvim-cmp)
+  -- ==============================
+  {
+    "hrsh7th/nvim-cmp",
+    event = "InsertEnter",  -- Only loads when entering insert mode (speeds up startup time)
+    dependencies = {
+      "hrsh7th/cmp-nvim-lsp",      -- LSP source for nvim-cmp
+      "hrsh7th/cmp-buffer",         -- Buffer completions
+      "hrsh7th/cmp-path",           -- Path completions
+      "L3MON4D3/LuaSnip",           -- Snippet engine
+      "saadparwaiz1/cmp_luasnip",   -- Luasnip source for nvim-cmp
+      "rafamadriz/friendly-snippets", -- Snippet collection
+    },
+    config = function()
+      require("config.completion")
+    end,
+  },
 })
