@@ -117,4 +117,4 @@ bindkey '^U' backward-kill-line
 # Optional: personal PATH or other environment variables
 # export PATH="$HOME/bin:/usr/local/bin:$PATH"
 # export LANG=en_US.UTF-8
-export PATH="/opt/homebrew/opt/rustup/bin:$PATH" # Rust
+export PATH="$HOME/.local/bin:/opt/homebrew/opt/rustup/bin:$PATH"
