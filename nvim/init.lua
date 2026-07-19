@@ -59,8 +59,51 @@ vim.opt.rtp:prepend(lazypath)
 -- Plugin setup with Lazy.nvim
 -- ==============================
 require("lazy").setup({
-  -- Syntax support for many languages
-  "sheerun/vim-polyglot",
+  -- ==============================
+  -- Colorscheme (Tokyo Night)
+  -- ==============================
+  {
+    "folke/tokyonight.nvim",
+    lazy = false,    -- load during startup
+    priority = 1000, -- load before other plugins so highlights apply
+    config = function()
+      require("tokyonight").setup({
+        style = "night", -- night | storm | moon | day
+      })
+      vim.cmd.colorscheme("tokyonight")
+    end,
+  },
+
+  -- ==============================
+  -- Treesitter (AST-based syntax highlighting)
+  -- ==============================
+  {
+    "nvim-treesitter/nvim-treesitter",
+    branch = "master",
+    build = ":TSUpdate",
+    config = function()
+      -- The legacy `master` branch hardcodes `--no-bindings`, which the modern
+      -- tree-sitter CLI (0.25+) rejects. Override the generate args to drop it
+      -- while still targeting the ABI our Neovim expects. Only affects the few
+      -- parsers built from grammar (e.g. swift).
+      require("nvim-treesitter.install").ts_generate_args = {
+        "generate", "--abi", vim.treesitter.language_version,
+      }
+
+      require("nvim-treesitter.configs").setup({
+        -- Parsers installed automatically when you open a file of that type
+        auto_install = true,
+        -- Or list specific languages to always have installed
+        ensure_installed = { "lua", "vim", "vimdoc", "bash", "swift" },
+        highlight = {
+          enable = true,
+        },
+        indent = {
+          enable = true,
+        },
+      })
+    end,
+  },
 
   -- EasyMotion plugin
   "easymotion/vim-easymotion",
