@@ -125,3 +125,33 @@ Two are installed. VS Code Dark+ (`vscode`) is the active default; Tokyo Night i
 :colorscheme vscode
 :colorscheme tokyonight
 ```
+
+---
+
+## Scripts
+
+The `bin/` directory holds small helper scripts. `install.sh` symlinks each one into `~/.local/bin` (without the `.sh` extension), so they're available on your `PATH`.
+
+Available scripts:
+
+- **`git-prune-merged`** — deletes local branches already merged into the remote's default branch (`main`/`master`), keeping your branch list tidy after PRs are merged. The default branch is detected automatically and the remote is assumed to be `origin`. The current branch and any branch checked out in another worktree are skipped. Because it's named `git-*` and on your `PATH`, Git picks it up as a subcommand: run it as `git prune-merged`. A `gpm` alias is also defined in `.zshrc`.
+
+### Installation
+
+1. Run the installer:
+
+   ```zsh
+   ~/.dotfiles/bin/install.sh
+   ```
+
+2. Ensure `~/.local/bin` is on your `PATH`. The provided `.zshrc` already does this:
+
+   ```zsh
+   export PATH="$HOME/.local/bin:$PATH"
+   ```
+
+3. Verify:
+
+   ```zsh
+   git prune-merged   # or: gpm
+   ```
