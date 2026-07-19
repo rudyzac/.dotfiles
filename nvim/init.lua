@@ -60,17 +60,31 @@ vim.opt.rtp:prepend(lazypath)
 -- ==============================
 require("lazy").setup({
   -- ==============================
-  -- Colorscheme (Tokyo Night)
+  -- Colorscheme (VS Code Dark+) — active default
+  -- ==============================
+  {
+    "Mofiqul/vscode.nvim",
+    lazy = false,    -- load during startup
+    priority = 1000, -- load before other plugins so highlights apply
+    config = function()
+      require("vscode").setup({
+        style = "dark", -- dark | light
+      })
+      vim.cmd.colorscheme("vscode")
+    end,
+  },
+
+  -- ==============================
+  -- Colorscheme (Tokyo Night) — installed but inactive; switch with
+  -- `:colorscheme tokyonight`.
   -- ==============================
   {
     "folke/tokyonight.nvim",
-    lazy = false,    -- load during startup
-    priority = 1000, -- load before other plugins so highlights apply
+    lazy = false,
     config = function()
       require("tokyonight").setup({
         style = "night", -- night | storm | moon | day
       })
-      vim.cmd.colorscheme("tokyonight")
     end,
   },
 
