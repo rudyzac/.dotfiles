@@ -3,6 +3,12 @@
 Personal configuration files for macOS, including Zsh setup and the Powerlevel10k theme.
 Organized for easy setup and migration to new machines, using symlinked configurations and template files for sensitive settings.
 
+> **Note — clone directory:** This README assumes the repository is cloned into `~/.dotfiles`. If you clone it elsewhere, replace `~/.dotfiles` in all commands with your actual path. For example, if you cloned into `~/projects/dotfiles`:
+>
+> ```zsh
+> ln -sf ~/projects/dotfiles/zsh/.zshrc ~/.zshrc
+> ```
+
 ---
 
 ## Prerequisites
@@ -18,10 +24,10 @@ Organized for easy setup and migration to new machines, using symlinked configur
 Clone this repository into your home directory (or wherever you prefer):
 
 ```zsh
-git clone <repo-url> ~/.dotfiles
+git clone https://github.com/rudyzac/.dotfiles.git ~/.dotfiles
 ```
 
-If you clone the repository into a different directory, please see the Appendix (end of the file).
+If you clone the repository into a different directory, see the note at the top of this file.
 
 ### 2. Create a symlink for `.zshrc`
 
@@ -80,40 +86,42 @@ After this, all Powerlevel10k icons should render correctly in the VS Code termi
 
 ## Neovim Configuration
 
-1. Install Neovim if it is not already installed.
+### Prerequisites
 
-2. Create the Neovim configuration directory:
+- **Neovim** (a recent version — the Treesitter config targets parser ABI 15).
+- A **C compiler** (`cc`/`clang`) so Treesitter can compile parsers. On macOS this comes with the Xcode Command Line Tools (`xcode-select --install`).
+- **Node.js** and **tree-sitter CLI**. Most Treesitter parsers ship pre-generated and only need the C compiler, but a few (e.g. Swift) are generated from their grammar at install time, which requires the `tree-sitter` CLI plus a Node runtime to evaluate the grammar:
 
-   ```zsh
-   mkdir -p ~/.config/nvim
-   ```
+  ```zsh
+  brew install node
+  npm install -g --allow-scripts=tree-sitter-cli tree-sitter-cli
+  ```
 
-3. Create `init.lua`:
+  Notes:
+  - `--allow-scripts=tree-sitter-cli` is required on npm 11+, which blocks the package's install script by default — that script is what downloads the CLI's native binary.
+  - Verify the CLI is on your `PATH`: `tree-sitter --version`.
 
-   ```zsh
-   touch ~/.config/nvim/init.lua
-   ```
+### Setup
 
-4. Create a symlink to the Neovim configuration file:
-
-   ```zsh
-   ln -sf ~/.dotfiles/nvim/init.lua ~/.config/nvim/init.lua
-   ```
-
-5. Restart your terminal or reload Zsh:
+1. Symlink the Neovim configuration directory:
 
    ```zsh
-   exec zsh
+   ln -sfn ~/.dotfiles/nvim ~/.config/nvim
    ```
 
-## Appendix: Custom Clone Directory
+2. Launch Neovim. On first start, [lazy.nvim](https://github.com/folke/lazy.nvim) bootstraps itself and installs all plugins automatically, then runs `:TSUpdate` to build the Treesitter parsers.
 
-This README assumes that the repository is cloned into `~/.dotfiles`.
+3. (Optional) Verify Treesitter is healthy:
 
-If you clone the repository into a different directory, make sure to replace `~/.dotfiles` in all commands with the actual path where you cloned the repository.
+   ```
+   :checkhealth nvim-treesitter
+   ```
 
-For example, if you cloned the repository into `~/projects/dotfiles`, update the commands accordingly:
+### Colorschemes
 
-```zsh
-ln -sf ~/projects/dotfiles/zsh/.zshrc ~/.zshrc
+Two are installed. VS Code Dark+ (`vscode`) is the active default; Tokyo Night is available too. Switch at any time with:
+
+```
+:colorscheme vscode
+:colorscheme tokyonight
 ```
