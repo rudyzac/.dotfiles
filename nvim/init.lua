@@ -130,8 +130,23 @@ require("lazy").setup({
   -- EasyMotion plugin
   "easymotion/vim-easymotion",
 
-  -- Lualine for status line
-  "nvim-lualine/lualine.nvim",
+  -- ==============================
+  -- Lualine (status line)
+  -- ==============================
+  {
+    "nvim-lualine/lualine.nvim",
+    dependencies = {
+      "nvim-tree/nvim-web-devicons", -- icons
+    },
+    config = function()
+      require("lualine").setup({
+        options = {
+          theme = "auto",      -- follow the active colorscheme (vscode/tokyonight)
+          globalstatus = true, -- one statusline for the whole window, not per-split
+        },
+      })
+    end,
+  },
 
   -- ==============================
   -- Gitsigns (git status in the gutter + buffer git state for barbar)
