@@ -40,6 +40,14 @@ vim.keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<CR>", { silent = true 
 vim.keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { silent = true })  -- Help tags
 
 -- ==============================
+-- Barbar (buffer tabline) key mappings
+-- ==============================
+vim.keymap.set("n", "<leader>bp", "<Cmd>BufferPrevious<CR>", { silent = true }) -- Previous buffer
+vim.keymap.set("n", "<leader>bn", "<Cmd>BufferNext<CR>", { silent = true })     -- Next buffer
+vim.keymap.set("n", "<leader>bc", "<Cmd>BufferClose<CR>", { silent = true })    -- Close current buffer
+vim.keymap.set("n", "<leader>bb", "<Cmd>BufferPick<CR>", { silent = true })     -- Pick a buffer (jump by letter)
+
+-- ==============================
 -- Bootstrap Lazy.nvim if not installed
 -- ==============================
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -124,6 +132,75 @@ require("lazy").setup({
 
   -- Lualine for status line
   "nvim-lualine/lualine.nvim",
+
+  -- ==============================
+  -- Gitsigns (git status in the gutter + buffer git state for barbar)
+  -- ==============================
+  {
+    "lewis6991/gitsigns.nvim",
+    config = function()
+      require("gitsigns").setup({
+        on_attach = function(bufnr)
+          local gs = require("gitsigns")
+          local function map(mode, lhs, rhs, desc)
+            vim.keymap.set(mode, lhs, rhs, { buffer = bufnr, silent = true, desc = desc })
+          end
+
+          -- Navigation between hunks
+          map("n", "]c", function() gs.nav_hunk("next") end, "Next git hunk")
+          map("n", "[c", function() gs.nav_hunk("prev") end, "Previous git hunk")
+
+          -- Hunk actions
+          map("n", "<leader>hs", gs.stage_hunk, "Stage hunk")
+          map("n", "<leader>hr", gs.reset_hunk, "Reset hunk")
+          map("v", "<leader>hs", function() gs.stage_hunk({ vim.fn.line("."), vim.fn.line("v") }) end, "Stage selection")
+          map("v", "<leader>hr", function() gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") }) end, "Reset selection")
+          map("n", "<leader>hS", gs.stage_buffer, "Stage buffer")
+          map("n", "<leader>hR", gs.reset_buffer, "Reset buffer")
+          -- `stage_hunk` toggles: run it again on a staged hunk to unstage.
+          map("n", "<leader>hp", gs.preview_hunk, "Preview hunk")
+
+          -- Blame & diff
+          map("n", "<leader>hb", function() gs.blame_line({ full = true }) end, "Blame line")
+          map("n", "<leader>hd", gs.diffthis, "Diff against index")
+
+          -- Toggles
+          map("n", "<leader>htb", gs.toggle_current_line_blame, "Toggle line blame")
+          map("n", "<leader>htd", gs.toggle_deleted, "Toggle deleted")
+        end,
+      })
+    end,
+  },
+
+  -- ==============================
+  -- Barbar (buffer tabline)
+  -- ==============================
+  {
+    "romgrk/barbar.nvim",
+    dependencies = {
+      "nvim-tree/nvim-web-devicons", -- file icons
+      "lewis6991/gitsigns.nvim",     -- git status in the tabline
+    },
+    init = function()
+      vim.g.barbar_auto_setup = false -- we call setup via `opts` below
+    end,
+    opts = {
+      -- Offset the tabline while Neo-tree's sidebar is open so tabs sit
+      -- above the editor, not over the file explorer.
+      sidebar_filetypes = {
+        ["neo-tree"] = { event = "BufWipeout" },
+      },
+      -- Show per-buffer git status in the tabline (off by default).
+      icons = {
+        gitsigns = {
+          added = { enabled = true, icon = "+" },
+          changed = { enabled = true, icon = "~" },
+          deleted = { enabled = true, icon = "-" },
+        },
+      },
+    },
+    version = "^1.0.0", -- only pull tagged 1.x releases
+  },
 
   -- ==============================
   -- Neo-tree (file explorer)
