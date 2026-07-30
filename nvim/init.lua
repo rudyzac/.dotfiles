@@ -21,11 +21,6 @@ vim.opt.termguicolors = true
 vim.opt.mouse = "a"
 
 -- ==============================
--- Key mappings
--- ==============================
-vim.keymap.set("n", "<leader><leader>w", "<Plug>(easymotion-bd-w)", { noremap = false, silent = true }) -- Double leader for EasyMotion
-
--- ==============================
 -- Neo-tree key mappings
 -- ==============================
 vim.keymap.set("n", "<leader>e", ":Neotree toggle<CR>", { silent = true }) -- Open/close file explorer
@@ -126,9 +121,6 @@ require("lazy").setup({
       })
     end,
   },
-
-  -- EasyMotion plugin
-  "easymotion/vim-easymotion",
 
   -- ==============================
   -- Lualine (status line)
