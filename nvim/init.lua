@@ -128,7 +128,11 @@ require("lazy").setup({
   {
     "folke/flash.nvim",
     event = "VeryLazy",
-    opts = {},
+    opts = {
+      highlight = {
+        backdrop = false, -- don't dim the rest of the buffer while jumping
+      },
+    },
     keys = {
       { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
       { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
