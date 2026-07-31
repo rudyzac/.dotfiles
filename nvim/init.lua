@@ -28,6 +28,9 @@ vim.opt.smartcase = true    -- ...but become case-sensitive when the pattern has
 -- Don't soft-wrap long lines; let them run off-screen (better for code)
 vim.opt.wrap = false
 
+-- Use the system clipboard for yank/delete/paste
+vim.opt.clipboard = "unnamedplus"
+
 -- ==============================
 -- Neo-tree key mappings
 -- ==============================
