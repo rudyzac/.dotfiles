@@ -385,8 +385,9 @@ require("lazy").setup({
       -- Mappings that only apply while there are multiple cursors.
       mc.addKeymapLayer(function(layerSet)
         -- Select a different cursor as the main one.
-        layerSet({ "n", "x" }, "<left>", mc.prevCursor)
-        layerSet({ "n", "x" }, "<right>", mc.nextCursor)
+        -- (Ctrl+Left/Right so plain arrows stay free for motion/selection.)
+        layerSet({ "n", "x" }, "<C-Left>", mc.prevCursor)
+        layerSet({ "n", "x" }, "<C-Right>", mc.nextCursor)
 
         -- Delete the main cursor.
         layerSet({ "n", "x" }, "<leader>x", mc.deleteCursor)
