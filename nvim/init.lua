@@ -25,6 +25,9 @@ vim.opt.mouse = "a"
 vim.opt.ignorecase = true   -- searches ignore case by default
 vim.opt.smartcase = true    -- ...but become case-sensitive when the pattern has a capital
 
+-- Don't soft-wrap long lines; let them run off-screen (better for code)
+vim.opt.wrap = false
+
 -- ==============================
 -- Neo-tree key mappings
 -- ==============================
