@@ -47,6 +47,11 @@ vim.keymap.set("n", "<C-j>", "<C-w>j", { silent = true }) -- to the split below
 vim.keymap.set("n", "<C-k>", "<C-w>k", { silent = true }) -- to the split above
 vim.keymap.set("n", "<C-l>", "<C-w>l", { silent = true }) -- to the split on the right
 
+-- Manage splits
+vim.keymap.set("n", "<leader>sv", "<C-w>v", { silent = true }) -- split window vertically
+vim.keymap.set("n", "<leader>sh", "<C-w>s", { silent = true }) -- split window horizontally
+vim.keymap.set("n", "<leader>sx", "<C-w>q", { silent = true }) -- close current split
+
 -- ==============================
 -- Neo-tree key mappings
 -- ==============================
