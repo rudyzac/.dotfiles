@@ -31,6 +31,19 @@ vim.opt.wrap = false
 -- Use the system clipboard for yank/delete/paste
 vim.opt.clipboard = "unnamedplus"
 
+-- Open new splits to the right and below
+vim.opt.splitright = true   -- vertical splits open to the right
+vim.opt.splitbelow = true   -- horizontal splits open below
+
+-- ==============================
+-- Window navigation
+-- ==============================
+-- Move between splits with Ctrl+h/j/k/l instead of the Ctrl-w prefix
+vim.keymap.set("n", "<C-h>", "<C-w>h", { silent = true }) -- to the split on the left
+vim.keymap.set("n", "<C-j>", "<C-w>j", { silent = true }) -- to the split below
+vim.keymap.set("n", "<C-k>", "<C-w>k", { silent = true }) -- to the split above
+vim.keymap.set("n", "<C-l>", "<C-w>l", { silent = true }) -- to the split on the right
+
 -- ==============================
 -- Neo-tree key mappings
 -- ==============================
