@@ -199,6 +199,15 @@ require("lazy").setup({
     "lewis6991/gitsigns.nvim",
     config = function()
       require("gitsigns").setup({
+        -- Show blame (author, date, summary) as faint text at the end of the
+        -- current line. Toggle with <leader>htb.
+        current_line_blame = true,
+        current_line_blame_opts = {
+          virt_text = true,
+          virt_text_pos = "eol", -- at the end of the line
+          delay = 100,           -- ms after the cursor settles
+        },
+        current_line_blame_formatter = "  <author>, <author_time:%Y-%m-%d> · <summary>",
         on_attach = function(bufnr)
           local gs = require("gitsigns")
           local function map(mode, lhs, rhs, desc)
