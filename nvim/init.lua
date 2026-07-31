@@ -41,11 +41,11 @@ vim.keymap.set("i", "jk", "<ESC>", { silent = true })
 -- ==============================
 -- Window navigation
 -- ==============================
--- Move between splits with Ctrl+h/j/k/l instead of the Ctrl-w prefix
-vim.keymap.set("n", "<C-h>", "<C-w>h", { silent = true }) -- to the split on the left
-vim.keymap.set("n", "<C-j>", "<C-w>j", { silent = true }) -- to the split below
-vim.keymap.set("n", "<C-k>", "<C-w>k", { silent = true }) -- to the split above
-vim.keymap.set("n", "<C-l>", "<C-w>l", { silent = true }) -- to the split on the right
+-- Move between splits with Option+h/j/k/l instead of the Ctrl-w prefix
+vim.keymap.set("n", "<A-h>", "<C-w>h", { silent = true }) -- to the split on the left
+vim.keymap.set("n", "<A-j>", "<C-w>j", { silent = true }) -- to the split below
+vim.keymap.set("n", "<A-k>", "<C-w>k", { silent = true }) -- to the split above
+vim.keymap.set("n", "<A-l>", "<C-w>l", { silent = true }) -- to the split on the right
 
 -- Manage splits
 vim.keymap.set("n", "<leader>sv", "<C-w>v", { silent = true }) -- split window vertically
@@ -69,10 +69,10 @@ vim.keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", { silent = tru
 -- ==============================
 -- Barbar (buffer tabline) key mappings
 -- ==============================
-vim.keymap.set("n", "<leader>bp", "<Cmd>BufferPrevious<CR>", { silent = true }) -- Previous buffer
-vim.keymap.set("n", "<leader>bn", "<Cmd>BufferNext<CR>", { silent = true })     -- Next buffer
-vim.keymap.set("n", "<leader>bc", "<Cmd>BufferClose<CR>", { silent = true })    -- Close current buffer
-vim.keymap.set("n", "<leader>bb", "<Cmd>BufferPick<CR>", { silent = true })     -- Pick a buffer (jump by letter)
+vim.keymap.set("n", "<C-h>", "<Cmd>BufferPrevious<CR>", { silent = true })      -- Previous buffer
+vim.keymap.set("n", "<C-l>", "<Cmd>BufferNext<CR>", { silent = true })          -- Next buffer
+vim.keymap.set("n", "<C-x>", "<Cmd>BufferClose<CR>", { silent = true })         -- Close current buffer
+vim.keymap.set("n", "<C-p>", "<Cmd>BufferPick<CR>", { silent = true })     -- Pick a buffer (jump by letter)
 
 -- ==============================
 -- Bootstrap Lazy.nvim if not installed
