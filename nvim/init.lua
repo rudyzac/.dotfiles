@@ -35,6 +35,9 @@ vim.opt.clipboard = "unnamedplus"
 vim.opt.splitright = true   -- vertical splits open to the right
 vim.opt.splitbelow = true   -- horizontal splits open below
 
+-- Exit insert mode by typing "jk" (keeps hands on the home row)
+vim.keymap.set("i", "jk", "<ESC>", { silent = true })
+
 -- ==============================
 -- Window navigation
 -- ==============================
