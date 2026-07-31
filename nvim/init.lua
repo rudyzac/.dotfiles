@@ -21,6 +21,10 @@ vim.opt.termguicolors = true
 -- Enable mouse support in all modes
 vim.opt.mouse = "a"
 
+-- Case-insensitive search, unless the pattern contains an uppercase letter
+vim.opt.ignorecase = true   -- searches ignore case by default
+vim.opt.smartcase = true    -- ...but become case-sensitive when the pattern has a capital
+
 -- ==============================
 -- Neo-tree key mappings
 -- ==============================
