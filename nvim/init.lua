@@ -9,10 +9,11 @@ vim.g.loaded_netrwPlugin = 1
 vim.opt.number = true
 vim.opt.relativenumber = true
 
--- Set indentation options
-vim.opt.expandtab = true
-vim.opt.shiftwidth = 2
-vim.opt.tabstop = 2
+-- Set indentation options (2 spaces by default)
+vim.opt.expandtab = true    -- turn tabs into spaces
+vim.opt.shiftwidth = 2      -- spaces per indent level (>>, <<, autoindent)
+vim.opt.tabstop = 2         -- visual width of a literal <Tab>
+vim.opt.softtabstop = 2     -- spaces inserted when pressing <Tab> in insert mode
 
 -- Enable syntax highlighting and colors
 vim.opt.termguicolors = true
