@@ -155,6 +155,55 @@ require("lazy").setup({
   },
 
   -- ==============================
+  -- Rainbow delimiters (colour-matched brackets, via treesitter)
+  -- ==============================
+  {
+    "HiPhish/rainbow-delimiters.nvim",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    config = function()
+      local rainbow = require("rainbow-delimiters")
+
+      -- Own highlight groups rather than the plugin's RainbowDelimiter{Red,...}:
+      -- vscode.nvim maps those onto its syntax palette, so "Red" comes out as the
+      -- keyword purple and "Violet" as a near-invisible grey. These are VS Code's
+      -- actual bracket-pair-colorization colours, which collide with nothing.
+      local levels = {
+        RainbowDelimiter1 = "#ffd700", -- gold
+        RainbowDelimiter2 = "#da70d6", -- orchid
+        RainbowDelimiter3 = "#179fff", -- blue
+      }
+
+      local function apply_highlights()
+        for group, fg in pairs(levels) do
+          vim.api.nvim_set_hl(0, group, { fg = fg })
+        end
+      end
+
+      apply_highlights()
+      -- Re-apply after any colorscheme switch, which clears custom groups.
+      vim.api.nvim_create_autocmd("ColorScheme", {
+        group = vim.api.nvim_create_augroup("RainbowDelimiterColors", { clear = true }),
+        callback = apply_highlights,
+      })
+
+      vim.g.rainbow_delimiters = {
+        strategy = {
+          [""] = rainbow.strategy["global"],
+        },
+        query = {
+          [""] = "rainbow-delimiters",
+          lua = "rainbow-blocks",
+        },
+        highlight = {
+          "RainbowDelimiter1",
+          "RainbowDelimiter2",
+          "RainbowDelimiter3",
+        },
+      }
+    end,
+  },
+
+  -- ==============================
   -- Flash (enhanced motion / search-based jumping)
   -- ==============================
   {
