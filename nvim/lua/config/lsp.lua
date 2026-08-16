@@ -43,6 +43,14 @@ local on_attach = function(client, bufnr)
 
   -- Show signature help
   vim.keymap.set("i", "<C-k>", vim.lsp.buf.signature_help, opts)
+
+  -- Formatting (only bound on servers that advertise the capability)
+  if client:supports_method("textDocument/formatting") then
+    -- Format the whole buffer (or the selection, in visual mode)
+    vim.keymap.set({ "n", "v" }, "<leader>cf", function()
+      vim.lsp.buf.format({ async = true })
+    end, opts)
+  end
 end
 
 -- ==============================
