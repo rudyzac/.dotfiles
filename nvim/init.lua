@@ -204,6 +204,33 @@ require("lazy").setup({
   },
 
   -- ==============================
+  -- Hlchunk (outline the block enclosing the cursor)
+  -- ==============================
+  {
+    "shellRaining/hlchunk.nvim",
+    event = { "BufReadPre", "BufNewFile" },
+    config = function()
+      require("hlchunk").setup({
+        chunk = {
+          enable = true,
+          use_treesitter = true,
+          style = {
+            -- Neutral slate: reads as structure without competing with the
+            -- rainbow delimiters or the Dark+ syntax colours. (Upstream
+            -- defaults to a purple that's hard to pick out.)
+            { fg = "#7d8590" },
+            { fg = "#f44747" }, -- unmatched delimiter (Dark+ error red)
+          },
+        },
+        -- Chunk only; the other modules stay off.
+        indent = { enable = false },
+        line_num = { enable = false },
+        blank = { enable = false },
+      })
+    end,
+  },
+
+  -- ==============================
   -- Flash (enhanced motion / search-based jumping)
   -- ==============================
   {
