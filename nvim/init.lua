@@ -396,6 +396,12 @@ require("lazy").setup({
             },
           },
         },
+        pickers = {
+          live_grep = {
+            -- ripgrep skips dotfiles by default; search them but never .git internals
+            additional_args = { "--hidden", "--glob", "!**/.git/*" },
+          },
+        },
       })
       telescope.load_extension("fzf")
     end,
