@@ -131,6 +131,8 @@ require("lazy").setup({
     branch = "master",
     build = ":TSUpdate",
     config = function()
+      require("config.treesitter_compat").apply()
+
       -- The legacy `master` branch hardcodes `--no-bindings`, which the modern
       -- tree-sitter CLI (0.25+) rejects. Override the generate args to drop it
       -- while still targeting the ABI our Neovim expects. Only affects the few
