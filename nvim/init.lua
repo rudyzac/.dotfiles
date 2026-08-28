@@ -399,6 +399,11 @@ require("lazy").setup({
           },
         },
         pickers = {
+          find_files = {
+            -- fd/rg skip dot-directories by default; search them but never .git internals
+            hidden = true,
+            file_ignore_patterns = { "^%.git/", "/%.git/" },
+          },
           live_grep = {
             -- ripgrep skips dotfiles by default; search them but never .git internals
             additional_args = { "--hidden", "--glob", "!**/.git/*" },
