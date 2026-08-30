@@ -145,7 +145,7 @@ require("lazy").setup({
         -- Parsers installed automatically when you open a file of that type
         auto_install = true,
         -- Or list specific languages to always have installed
-        ensure_installed = { "lua", "vim", "vimdoc", "bash", "swift" },
+        ensure_installed = { "lua", "vim", "vimdoc", "bash", "swift", "terraform", "hcl" },
         highlight = {
           enable = true,
         },

@@ -86,6 +86,18 @@ vim.lsp.config("jsonls", {
   capabilities = capabilities,
 })
 
+-- Terraform Language Server (requires terraform-ls)
+-- brew install hashicorp/tap/terraform-ls
+vim.lsp.config("terraformls", {
+  on_attach = function(client, bufnr)
+    on_attach(client, bufnr)
+    -- lspconfig's shipped terraformls config turns on codelens in its own
+    -- on_attach; setting on_attach here replaces that, so re-enable it.
+    vim.lsp.codelens.enable(true, { bufnr = bufnr })
+  end,
+  capabilities = capabilities,
+})
+
 -- Markdown Language Server (requires marksman)
 -- brew install marksman (or see https://github.com/artempyanykh/marksman)
 vim.lsp.config("marksman", {
@@ -118,4 +130,4 @@ for type, icon in pairs(signs) do
 end
 
 -- Enable the configured language servers
-vim.lsp.enable({ "lua_ls", "sourcekit", "jsonls", "marksman" })
+vim.lsp.enable({ "lua_ls", "sourcekit", "jsonls", "marksman", "terraformls" })
