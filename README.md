@@ -117,6 +117,30 @@ After this, all Powerlevel10k icons should render correctly in the VS Code termi
    :checkhealth nvim-treesitter
    ```
 
+### Terraform LSP
+
+The Terraform language server is configured in `nvim/lua/config/lsp.lua`, but the
+binaries it drives are not bundled — install them from HashiCorp's Homebrew tap:
+
+```zsh
+brew install hashicorp/tap/terraform-ls
+brew install hashicorp/tap/terraform
+```
+
+Notes:
+
+- Both come from `hashicorp/tap`, not homebrew-core.
+- `terraform-ls` is the language server Neovim launches (`terraform-ls serve`); it
+  must be on your `PATH`. Verify with `terraform-ls --version`.
+- The `terraform` CLI is a separate requirement: `terraform-ls` shells out to it to
+  initialise modules and read provider schemas, so completion for resources and
+  attributes stays empty without it. Verify with `terraform version`.
+- The `terraform` and `hcl` Treesitter parsers are installed automatically on first
+  launch — nothing to do by hand.
+
+To confirm the server is running, open a `.tf` file and run `:checkhealth vim.lsp`;
+`terraformls` should be listed as an attached client.
+
 ### Colorschemes
 
 Two are installed. VS Code Dark+ (`vscode`) is the active default; Tokyo Night is available too. Switch at any time with:
