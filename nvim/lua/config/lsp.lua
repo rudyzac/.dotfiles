@@ -98,6 +98,44 @@ vim.lsp.config("terraformls", {
   capabilities = capabilities,
 })
 
+-- TypeScript/JavaScript Language Server (requires vtsls)
+-- brew install vtsls
+-- Handles .js, .jsx, .ts, .tsx, .mjs and .cjs.
+--
+-- vtsls over ts_ls: it wraps VS Code's TypeScript extension rather than reimplementing
+-- the protocol shim, and resolves each package's tsconfig.json inside a single server
+-- instance instead of spawning one client per root. Do not enable ts_ls alongside it —
+-- they drive the same tsserver and would double every diagnostic.
+vim.lsp.config("vtsls", {
+  on_attach = on_attach,
+  capabilities = capabilities,
+})
+
+-- ESLint Language Server (requires vscode-eslint-language-server)
+-- brew install vscode-langservers-extracted
+--
+-- Complements vtsls rather than competing with it: vtsls reports type errors, eslint
+-- reports lint rules and offers autofixes. It only starts when it finds an eslint
+-- config in the tree, so projects without one are unaffected.
+--
+-- lspconfig's shipped eslint config registers :LspEslintFixAll in its own on_attach;
+-- setting on_attach here replaces that, so capture the shipped one and call through.
+local eslint_on_attach = vim.lsp.config.eslint.on_attach
+vim.lsp.config("eslint", {
+  on_attach = function(client, bufnr)
+    on_attach(client, bufnr)
+    eslint_on_attach(client, bufnr)
+  end,
+  capabilities = capabilities,
+  settings = {
+    -- Default is true, which makes eslint advertise textDocument/formatting. Both it
+    -- and vtsls attach to the same buffer, so <leader>cf would then run two formatters
+    -- over it and let them fight. Leave formatting to vtsls; apply eslint's fixes with
+    -- :LspEslintFixAll instead.
+    format = false,
+  },
+})
+
 -- Markdown Language Server (requires marksman)
 -- brew install marksman (or see https://github.com/artempyanykh/marksman)
 vim.lsp.config("marksman", {
@@ -130,4 +168,4 @@ for type, icon in pairs(signs) do
 end
 
 -- Enable the configured language servers
-vim.lsp.enable({ "lua_ls", "sourcekit", "jsonls", "marksman", "terraformls" })
+vim.lsp.enable({ "lua_ls", "sourcekit", "jsonls", "marksman", "terraformls", "vtsls", "eslint" })
