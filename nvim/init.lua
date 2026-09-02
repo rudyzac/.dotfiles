@@ -253,6 +253,24 @@ require("lazy").setup({
   },
 
   -- ==============================
+  -- Neoscroll (smooth scrolling)
+  -- ==============================
+  {
+    "karb94/neoscroll.nvim",
+    event = "VeryLazy",
+    opts = {
+      -- Animates the default scroll keys: <C-u>/<C-d>, <C-b>/<C-f>,
+      -- <C-y>/<C-e> and zt/zz/zb.
+      easing = "sine",           -- ease in and out rather than a flat linear slide
+      duration_multiplier = 0.8, -- a little quicker than the default timing
+      -- Keep the cursor visible while scrolling; the default hides it, which
+      -- makes it easy to lose your place on arrival.
+      hide_cursor = false,
+      respect_scrolloff = true,  -- don't scroll the cursor past 'scrolloff'
+    },
+  },
+
+  -- ==============================
   -- Lualine (status line)
   -- ==============================
   {
