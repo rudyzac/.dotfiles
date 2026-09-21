@@ -47,6 +47,16 @@ vim.keymap.set("n", "<A-j>", "<C-w>j", { silent = true }) -- to the split below
 vim.keymap.set("n", "<A-k>", "<C-w>k", { silent = true }) -- to the split above
 vim.keymap.set("n", "<A-l>", "<C-w>l", { silent = true }) -- to the split on the right
 
+-- ==============================
+-- Move lines
+-- ==============================
+-- Move the current line (or visual selection) up/down with Ctrl+j/k, re-indenting after the move
+-- (Ctrl rather than Option: the Italian layout needs Option for {} and [], so Option isn't Meta)
+vim.keymap.set("n", "<C-j>", ":m .+1<CR>==", { silent = true })      -- move line down
+vim.keymap.set("n", "<C-k>", ":m .-2<CR>==", { silent = true })      -- move line up
+vim.keymap.set("v", "<C-j>", ":m '>+1<CR>gv=gv", { silent = true }) -- move selection down
+vim.keymap.set("v", "<C-k>", ":m '<-2<CR>gv=gv", { silent = true }) -- move selection up
+
 -- Manage splits
 vim.keymap.set("n", "<leader>sv", "<C-w>v", { silent = true }) -- split window vertically
 vim.keymap.set("n", "<leader>sh", "<C-w>s", { silent = true }) -- split window horizontally
