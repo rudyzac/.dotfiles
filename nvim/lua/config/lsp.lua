@@ -4,12 +4,50 @@ local cmp_nvim_lsp = require("cmp_nvim_lsp")
 -- Get capabilities from cmp_nvim_lsp
 local capabilities = cmp_nvim_lsp.default_capabilities()
 
+-- ==============================
+-- Hover float border
+-- ==============================
+
+-- The hover float gets its own border colour instead of the shared FloatBorder,
+-- so it reads as a distinct window rather than blending into the buffer. A
+-- border passed as { char, highlight } cells is the only way to colour one
+-- float differently from the rest -- the string forms ("rounded", "single")
+-- all draw with FloatBorder, which every other float uses too.
+local function hover_border()
+  -- Clockwise from the top-left corner, as nvim_open_win expects.
+  return {
+    { "╭", "LspHoverBorder" },
+    { "─", "LspHoverBorder" },
+    { "╮", "LspHoverBorder" },
+    { "│", "LspHoverBorder" },
+    { "╯", "LspHoverBorder" },
+    { "─", "LspHoverBorder" },
+    { "╰", "LspHoverBorder" },
+    { "│", "LspHoverBorder" },
+  }
+end
+
+-- VS Code's type teal: bright enough to frame the float on the dark background,
+-- and unused by the rainbow-delimiter groups in init.lua.
+local function apply_hover_highlight()
+  vim.api.nvim_set_hl(0, "LspHoverBorder", { fg = "#4ec9b0" })
+end
+
+apply_hover_highlight()
+-- Re-apply after any colorscheme switch, which clears custom groups.
+vim.api.nvim_create_autocmd("ColorScheme", {
+  group = vim.api.nvim_create_augroup("LspHoverColors", { clear = true }),
+  callback = apply_hover_highlight,
+})
+
 -- Configure LSP keymaps for when a buffer is attached
 local on_attach = function(client, bufnr)
   local opts = { noremap = true, silent = true, buffer = bufnr }
 
-  -- Hover documentation
-  vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+  -- Hover documentation. Press K again to jump into the float and scroll it.
+  vim.keymap.set("n", "K", function()
+    vim.lsp.buf.hover({ border = hover_border() })
+  end, opts)
 
   -- Go to definition
   vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)

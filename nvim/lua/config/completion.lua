@@ -12,6 +12,11 @@ cmp.setup({
     end,
   },
   mapping = {
+    -- Force the completion menu open (e.g. to list every method on a receiver
+    -- before typing any of its name). Typing already triggers it; this is for
+    -- the spots where nothing was typed, or where <C-e> dismissed it.
+    ["<C-Space>"] = cmp.mapping.complete(),
+
     -- Navigate completion menu
     ["<C-p>"] = cmp.mapping.select_prev_item(),
     ["<C-n>"] = cmp.mapping.select_next_item(),
