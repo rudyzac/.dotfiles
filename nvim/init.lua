@@ -63,6 +63,31 @@ vim.keymap.set("n", "<leader>sh", "<C-w>s", { silent = true }) -- split window h
 vim.keymap.set("n", "<leader>sx", "<C-w>q", { silent = true }) -- close current split
 
 -- ==============================
+-- Terminal
+-- ==============================
+-- Open a shell in a split below ('splitbelow'), ready to type in.
+-- Unlike `:!cmd`, this is an interactive shell on a real terminal, so ~/.zshrc
+-- is read: oh-my-zsh aliases, completion and history all work.
+vim.keymap.set("n", "<leader>t", function()
+  vim.cmd("split | terminal")
+  vim.cmd("startinsert")
+end, { silent = true })
+
+-- Leave terminal mode with a double Esc (the built-in <C-\><C-n> is awkward).
+-- Two taps rather than one, so a single Esc still reaches whatever is running
+-- inside the terminal (vim, fzf, less).
+vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>")
+
+-- Terminal buffers don't need line numbers or a sign column
+vim.api.nvim_create_autocmd("TermOpen", {
+  callback = function()
+    vim.opt_local.number = false
+    vim.opt_local.relativenumber = false
+    vim.opt_local.signcolumn = "no"
+  end,
+})
+
+-- ==============================
 -- Neo-tree key mappings
 -- ==============================
 vim.keymap.set("n", "<leader>e", ":Neotree toggle<CR>", { silent = true }) -- Open/close file explorer
