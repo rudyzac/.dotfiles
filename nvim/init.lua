@@ -38,6 +38,9 @@ vim.opt.splitbelow = true   -- horizontal splits open below
 -- Exit insert mode by typing "jk" (keeps hands on the home row)
 vim.keymap.set("i", "jk", "<ESC>", { silent = true })
 
+-- Clear search highlight with Esc in normal mode (the default <C-l> is remapped below)
+vim.keymap.set("n", "<Esc>", "<Cmd>nohlsearch<CR><Esc>", { silent = true })
+
 -- ==============================
 -- Window navigation
 -- ==============================
